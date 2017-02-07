@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         setTimeout(() => {
-            this.modalService.showModal.next({ title: "Hello World!", contentType: MyModalContentComponent });
+            this.modalService.showModal.next({ title: 'Hello World!', contentType: MyModalContentComponent });
         }, 2000);
     }
 }
