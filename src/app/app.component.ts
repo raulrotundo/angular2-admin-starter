@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
 @Component({
     selector: 'my-modal-test',
-    template: 'Hello there!',
+    template: '<a href="https://www.google.com/"><i class="fa fa-sign-out fa-fw"></i> Hello!</a>',
 })
 export class MyModalContentComponent {
 

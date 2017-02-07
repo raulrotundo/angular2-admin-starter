@@ -3,24 +3,13 @@ import { ModalService } from './modal.service';
 
 @Component({
     selector: 'modal-comp',
-    template: `
-  <div class="modal fade" [class.in]="show" id="theModal" tabindex="-1" role="dialog" aria-labelledby="theModalLabel">
-    <div class="modal-dialog largeWidth" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title" id="theModalLabel">{{ title }}</h4></div>
-        <div class="modal-body" #modalBody>
-      </div>
-    <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
-  </div></div></div></div>
-`,
+    templateUrl: './modal.component.html',
     styles: ['.modal.fade.in { display: block; }']
 })
 export class ModalComponent {
     @ViewChild('modalBody', { read: ViewContainerRef }) private body: ViewContainerRef;
     public show: Boolean = false;
-    public title: string = "";
+    public title: String = '';
     private cmp: ComponentRef<any>;
 
     constructor(
