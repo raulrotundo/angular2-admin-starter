@@ -15,14 +15,16 @@
             "main": "main.ts",
             "test": "test.ts",
             "tsconfig": "tsconfig.json",
-            "prefix": "app",
+            "prefix": "",
             "mobile": false,
             "styles": [
                 "../node_modules/bootstrap/dist/css/bootstrap.css",
+                "../node_modules/font-awesome/less/font-awesome.less",
+                "assets/css/sb-admin-2.css",
                 "styles.less"
             ],
             "scripts": [
-                "../node_modules/jquery/dist/jquery.min.js",
+                "../node_modules/jquery/dist/jquery.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.js"
             ],
             "environments": {

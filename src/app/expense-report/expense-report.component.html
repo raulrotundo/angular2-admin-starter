@@ -1,0 +1,147 @@
+<form class="form-inline">
+    <div class="row">
+        <fieldset class="col-md-12">
+            <legend>Filter Options</legend>
+            <div class="form-group">
+                <label for='reportFor'>Report For</label> <input type="text" name="reportFor" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for='receiptFrom'>Receipt From</label>
+                <input type="date" name="receiptFrom">
+            </div>
+            <div class="form-group">
+                <label for='receiptTo'>Receipt To</label>
+                <input type="date" name="receiptTo">
+            </div>
+            <div class="form-group">
+                <label for='wbsElementLvl1'>WBS Element (Level 1)</label>
+                <input type="text" name="wbsElementLvl1" class="form-control" /> <button class="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+            <div class="form-group">
+                <label for='wbsElementLvl3'>WBS Element (Level 3)</label>
+                <input type="text" name="wbsElementLvl3" class="form-control" /> <button class="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+            <div class="form-group">
+                <label for='reportNumber'>Report Number</label>
+                <input type="text" name="reportNumber" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for='expenseType'>Expense Type</label>
+                <select name="expenseType" class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <button class="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+            <div class="form-group">
+                <label for='payrollPeriodEndDateFrom'>Payroll Period End Date From</label>
+                <input type="date" name="payrollPeriodEndDateFrom" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for='payrollPeriodEndDateTo'>Payroll Period End Date To</label>
+                <input type="date" name="payrollPeriodEndDateTo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for='expenseAmountFrom'>Expense Amount From</label>
+                <input type="text" name="expenseAmountFrom" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for='expenseAmountTo'>Expense Amount To</label>
+                <input type="text" name="expenseAmountTo" class="form-control">
+            </div>
+
+            <!-- ******************** -->
+            <button>Refresh Report</button>
+
+        </fieldset>
+    </div>
+
+    <div class="row">
+        <fieldset class="col-md-6">
+            <legend>Report View</legend>
+            <div class="radio">
+                <label>
+                <input type="radio" name="basicReport" value="basicReport" checked>
+                Basic Report
+            </label>
+            </div>
+            <div class="radio">
+                <label>
+                <input type="radio" name="additionalColumns" value="additionalColumns">
+               Additional Columns
+            </label>
+            </div>
+            <div class="radio">
+                <label>
+                <input type="radio" name="attendeeDetails" value="attendeeDetails">
+                Attendee Details
+            </label>
+            </div>
+            <div class="radio">
+                <label>
+                <input type="radio" name="mileageReports" id="mileageReports" value="mileageReports">
+                Mileage Reports
+            </label>
+            </div>
+        </fieldset>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Export to Excel
+            </button>
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print - Letter
+            </button>
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print - Legal
+            </button>
+        </div>
+        <div class="col-md-2" style="text-align:right"> Latest Refresh: 01/18/2017 12:21:54
+</div>
+</div>
+
+</form>
+
+<h2>Expense Report</h2>
+<!-- should we use a plugin for the table? maybe ag-grid? -->
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>WBS Element Level 1</th>
+            <th>WBS Element Level 3</th>
+            <th>Report Number</th>
+            <th>Report Name</th>
+            <th>Receipt Date</th>
+            <th>Payroll Period End Date</th>
+            <th>Expense Type</th>
+            <th>Expense Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
