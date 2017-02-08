@@ -4,6 +4,11 @@ import {
 } from '@angular/core';
 import { ModalService } from './modal.service';
 
+
+/* References:
+    http://stackoverflow.com/questions/36566698/how-to-dynamically-create-bootstrap-modals-as-angular2-components
+    http://plnkr.co/edit/ZXsIWykqKZi5r75VMtw2?p=preview
+*/
 @Component({
     selector: 'modal-comp',
     templateUrl: './modal.component.html',
