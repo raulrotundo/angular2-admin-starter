@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../modal';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'app-root',
@@ -7,21 +8,19 @@ import { ModalService } from '../modal';
     styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-    constructor(private modalService: ModalService) {
+    title = '';
 
-    }
+    constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        setTimeout(() => {
-            this.modalService.showModal.next({ title: 'Hello World!', contentType: MyModalContentComponent });
-        }, 2000);
+        this.router.events
+            .filter(event => event instanceof NavigationEnd)
+            .subscribe(event => {
+                let currentRoute = this.activatedRoute.root;
+                while (currentRoute.children[0]) {
+                    currentRoute = currentRoute.children[0];
+                }
+                this.title = (<any>currentRoute.snapshot.data).title;
+            });
     }
-}
-
-@Component({
-    selector: 'my-modal-test',
-    template: '<a href="https://www.google.com/"><i class="fa fa-sign-out fa-fw"></i> Hello!</a>',
-})
-export class MyModalContentComponent {
-
 }

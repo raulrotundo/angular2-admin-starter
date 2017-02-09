@@ -1,42 +1,118 @@
-import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef, Injector } from '@angular/core';
+import {
+    Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Output,
+    ReflectiveInjector, ViewChild, ViewContainerRef
+} from '@angular/core';
 import { ModalService } from './modal.service';
 
+
+/* References:
+    http://stackoverflow.com/questions/36566698/how-to-dynamically-create-bootstrap-modals-as-angular2-components
+    http://plnkr.co/edit/ZXsIWykqKZi5r75VMtw2?p=preview
+*/
 @Component({
     selector: 'modal-comp',
     templateUrl: './modal.component.html',
-    styles: ['.modal.fade.in { display: block; }']
+    styles: ['.fade.in { display: block; }']
 })
 export class ModalComponent {
-    @ViewChild('modalBody', { read: ViewContainerRef }) private body: ViewContainerRef;
+    @ViewChild('dynamicContainer', { read: ViewContainerRef }) private container: ViewContainerRef;
     public show: Boolean = false;
     public title: String = '';
-    private cmp: ComponentRef<any>;
+    private component: ComponentRef<any>;
 
-    constructor(
-        modalService: ModalService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        injector: Injector) {
+    private data: any;
+    public buttons: Array<ModalButton>;
+    private closeCallback: (any) => void;
 
-        modalService.showModal.subscribe((value: ModalParams) => {
-            if (this.cmp) {
-                this.cmp.destroy();
+    constructor(private modalService: ModalService, private componentFactoryResolver: ComponentFactoryResolver) {
+
+        modalService.onShow.subscribe((value: ModalParams) => {
+            if (this.component) {
+                this.component.destroy();
             }
             this.title = value.title;
+            this.buttons = value.buttons;
+            this.closeCallback = value.closeCallback;
+
+            // Inputs need to be in the following format to be resolved properly
+            const inputProviders = Object.keys(value.inputs).map((inputName) => {
+                return { provide: inputName, useValue: value.inputs[inputName] };
+            });
+            const resolvedInputs = ReflectiveInjector.resolve(inputProviders);
+
+            // We create an injector out of the data we want to pass down and this components injector
+            const injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.container.parentInjector);
+
+            // We create a factory out of the component we want to create
             const factory = this.componentFactoryResolver.resolveComponentFactory(value.contentType);
-            this.cmp = this.body.createComponent(factory);
+
+            // We create the component using the factory and the injector
+            const component = factory.create(injector);
+
+            // this.dynamicComponentContainer.insert(component.hostView);
+
+            // We create the component using the factory and the injector
+            this.component = this.container.createComponent(factory);
+
+            if (value.inputs) {
+                for (const input in value.inputs) {
+                    if (value.inputs.hasOwnProperty(input)) {
+                        this.component.instance.data[input] = value.inputs[input];
+                    }
+                }
+            }
+
+            // We could do the same as we did with inputs, but we only have the onDataChange event
+            this.component.instance.onDataChange.subscribe(data => {
+                this.data = data;
+            });
+
             this.show = true;
         });
     }
+    setButtonClass(type: string) {
+        const ret = {};
+        ret[type] = true;
+        return ret;
+    }
 
-    close() {
+    close(button: ModalButton) {
         this.show = false;
-        if (this.cmp) {
-            this.cmp.destroy();
+        if (this.component) {
+            this.component.destroy();
         }
-        this.cmp = null;
+        this.component = null;
+
+        if (this.closeCallback) {
+            this.closeCallback({ button: button, data: this.data });
+        }
     }
 }
 
 export class ModalParams {
-    constructor(public title: string, public contentType: any) { }
+    // we don't need to explicitly handle outputs for now
+    constructor(public title: string,
+        public contentType: any,
+        public inputs: any = null,
+        public buttons: Array<ModalButton> = [new ModalButton('Accept', ButtonType.Success)],
+        public closeCallback: (any) => void = null) { }
+}
+
+export class ModalButton {
+    constructor(public text: string = '', public type: ButtonType = ButtonType.Default) { }
+}
+
+export abstract class ButtonType {
+    public static Danger: string = 'btn-danger';
+    public static Default: string = 'btn-default';
+    public static Info: string = 'btn-info';
+    public static Link: string = 'btn-link';
+    public static Primary: string = 'btn-primary';
+    public static Success: string = 'btn-success';
+    public static Warning: string = 'btn-warning';
+}
+
+export class ModalCloseEvent {
+    action: string; // button that was clicked
+    data: any; // whatever data you need returned, if any
 }

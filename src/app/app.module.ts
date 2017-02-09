@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AppComponent, MyModalContentComponent } from './app.component';
+import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent, HelloModalContentComponent, ListModalContentComponent } from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './heroe-detail/hero-detail.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroService } from './services/hero.service';
@@ -15,7 +15,8 @@ import { ModalModule } from '../modal';
 
 @NgModule({
   declarations: [
-    MyModalContentComponent,
+    HelloModalContentComponent,
+    ListModalContentComponent,
     AppComponent,
     DashboardComponent,
     HeroDetailComponent,
@@ -29,7 +30,7 @@ import { ModalModule } from '../modal';
     AppRoutingModule,
     ModalModule.forRoot()
   ],
-  entryComponents: [MyModalContentComponent],
+  entryComponents: [HelloModalContentComponent, ListModalContentComponent],
   providers: [HeroService],
   bootstrap: [AppComponent]
 })
