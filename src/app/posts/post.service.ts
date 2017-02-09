@@ -1,55 +1,20 @@
-import {Injectable} from '@angular/core';
-import {RequestMethod} from '@angular/http';
-
-import {ResourceAction, ResourceMethod, ResourceParams} from 'ng2-resource-rest';
-import {RestClient} from '../shared/rest-client';
-
-export interface IQueryInput {
-    page?: number;
-    perPage?: number;
-    dateFrom?: string;
-    dateTo?: string;
-    isRead?: string;
-}
-
-export  interface IPost {
-    id?: number;
-    title?: string;
-    body?: string;
-}
+import { Injectable } from '@angular/core';
+import {HttpService} from '../shared/http.service';
 
 @Injectable()
-@ResourceParams({
-    url: '/posts'
-})
-export class PostService extends RestClient {
+export class PostService {
+    constructor (private http: HttpService) {}
 
-    @ResourceAction({
-        isArray: false,
-        path: '/',
-        auth: true
-    })
-    getPosts: ResourceMethod<IQueryInput, IPost[]>;
+    // token will added automatically to get request header
+    getPost (id: number) {
+        return this.http.get(`https://jsonplaceholder.typicode.com/posts/${id}`).map((res) => {
+            return res.json();
+        } );
+    }
 
-    @ResourceAction({
-        path: '/{!id}'
-    })
-    getPost: ResourceMethod<{id: any}, IPost>;
-
-    @ResourceAction({
-        method: RequestMethod.Post
-    })
-    savePost: ResourceMethod<IPost, any>;
-
-    @ResourceAction({
-        method: RequestMethod.Put,
-        path: '/{!id}'
-    })
-    updatePost: ResourceMethod<IPost, any>;
-
-    @ResourceAction({
-        method: RequestMethod.Delete,
-        path: '/{!id}'
-    })
-    deletePost: ResourceMethod<{id: any}, any>;
+    getPosts() {
+        return this.http.get('https://jsonplaceholder.typicode.com/posts').map((res) => {
+            return res.json();
+        });
+    }
 }
