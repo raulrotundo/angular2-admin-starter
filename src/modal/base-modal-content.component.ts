@@ -9,5 +9,5 @@ import { ModalCloseEvent } from './modal.component';
 export class BaseModalContentComponent {
     // note that output and input don't work when dynamically injecting a component
     @Output() public onDataChange: EventEmitter<any> = new EventEmitter<any>();
-    @Input() public data: any;
+    @Input() public data: any = {};
 }

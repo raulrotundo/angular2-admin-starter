@@ -30,7 +30,6 @@ export class ModalComponent {
             if (this.component) {
                 this.component.destroy();
             }
-            // TODO: this.onClose.subscribe();
             this.title = value.title;
             this.buttons = value.buttons;
             this.closeCallback = value.closeCallback;
@@ -44,7 +43,6 @@ export class ModalComponent {
             // We create an injector out of the data we want to pass down and this components injector
             const injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.container.parentInjector);
 
-
             // We create a factory out of the component we want to create
             const factory = this.componentFactoryResolver.resolveComponentFactory(value.contentType);
 
@@ -57,10 +55,9 @@ export class ModalComponent {
             this.component = this.container.createComponent(factory);
 
             if (value.inputs) {
-                // for (i = 0; i < value.inputs.length; ++i) {
                 for (const input in value.inputs) {
                     if (value.inputs.hasOwnProperty(input)) {
-                        this.component.instance[input] = value.inputs[input];
+                        this.component.instance.data[input] = value.inputs[input];
                     }
                 }
             }
@@ -70,8 +67,6 @@ export class ModalComponent {
                 this.data = data;
             });
 
-            // We insert the component into the dom container
-            // this.dynamicComponentContainer.insert(component.hostView);
             this.show = true;
         });
     }
@@ -81,7 +76,7 @@ export class ModalComponent {
         return ret;
     }
 
-    close(action: string) {
+    close(button: ModalButton) {
         this.show = false;
         if (this.component) {
             this.component.destroy();
@@ -89,7 +84,7 @@ export class ModalComponent {
         this.component = null;
 
         if (this.closeCallback) {
-            this.closeCallback({ action: action, data: this.data });
+            this.closeCallback({ button: button, data: this.data });
         }
     }
 }
@@ -106,6 +101,7 @@ export class ModalParams {
 export class ModalButton {
     constructor(public text: string = '', public type: ButtonType = ButtonType.Default) { }
 }
+
 export abstract class ButtonType {
     public static Danger: string = 'btn-danger';
     public static Default: string = 'btn-default';
