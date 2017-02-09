@@ -9,7 +9,6 @@
             </div>
             <div class="modal-footer">
                 <button *ngFor="let button of buttons" type="button" class="btn" [ngClass]="setButtonClass(button.type)" (click)="close(button)">{{ button.text }}</button>
-                <!-- <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button> -->
             </div>
         </div>
     </div>
