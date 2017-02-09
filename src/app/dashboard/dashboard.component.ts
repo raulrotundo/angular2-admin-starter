@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BaseModalContentComponent, ModalService, ModalParams, ModalButton, ButtonType } from '../../modal';
 
 @Component({
-    moduleId: module.id,
     selector: 'my-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
