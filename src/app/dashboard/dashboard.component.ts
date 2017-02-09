@@ -21,7 +21,7 @@ export class DashboardComponent {
         const buttons = [acceptButton, cancelButton];
 
         const params = new ModalParams('Hello!', HelloModalContentComponent,
-            { name: this.name }, buttons, (response) => { if (response.button === acceptButton) { this.name = response.data.name; } });
+            { 'name': this.name }, buttons, (response) => { if (response.button === acceptButton) { this.name = response.data.name; } });
         this.modalService.show(params);
     }
 
@@ -31,7 +31,7 @@ export class DashboardComponent {
         const buttons = [acceptButton, cancelButton];
 
         const names: Array<string> = ['Hugo', 'Gerardo', 'Cesar', 'Jorge', 'Marcelo'];
-        const params = new ModalParams('The coolest list ever!', ListModalContentComponent, { names: names }, buttons);
+        const params = new ModalParams('The coolest list ever!', ListModalContentComponent, { 'names': names }, buttons);
         this.modalService.show(params);
     }
 }
@@ -55,17 +55,16 @@ export class HelloModalContentComponent extends BaseModalContentComponent {
 
 @Component({
     selector: 'list-modal-content',
-    template: `<h2 *ngIf="!names || names.length == 0">No names to show</h2>
+    template: `<h2 *ngIf="!data.names || data.names.length == 0">No names to show</h2>
                 <ul>
-                    <li *ngFor="let name of names">
+                    <li *ngFor="let name of data.names">
                         <span class="fa fa-fw fa-user"></span>{{ name }}
                     </li>
                 </ul>
     `,
-    styles: ['h2 { text-color: red;}']
+    styles: ['h2 { color: red;}']
 })
 export class ListModalContentComponent extends BaseModalContentComponent {
-    public names: Array<string> = [];
     constructor() {
         super();
 
