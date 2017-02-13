@@ -7,7 +7,7 @@ export class PostService {
 
     // token will added automatically to get request header
     getPost (id: number) {
-        return this.http.get(`https://jsonplaceholder.typicode.com/posts/${id}`).map((res) => {
+        return this.http.get('https://jsonplaceholder.typicode.com/posts/'+id).map((res) => {
             return res.json();
         } );
     }
