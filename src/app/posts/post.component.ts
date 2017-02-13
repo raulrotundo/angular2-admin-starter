@@ -24,7 +24,6 @@ export class PostComponent {
 
     getPost() {
         this.postService.getPost(this.post.id).subscribe((resp) => {
-            console.log(resp.status);
             this.posts = [resp];
         });
     }
